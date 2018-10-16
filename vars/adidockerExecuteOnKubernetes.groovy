@@ -20,6 +20,8 @@ import hudson.AbortException
 ]
 @Field Set STEP_CONFIG_KEYS = PARAMETER_KEYS.plus(['stashIncludes', 'stashExcludes'])
 
+echo " containerCommands: ${containerCommands} ; containerName: ${containerName} ; containerMap: ${containerMap} "
+
 void call(Map parameters = [:], body) {
     handlePipelineStepErrors(stepName: STEP_NAME, stepParameters: parameters) {
         if (!JenkinsUtils.isPluginActive(PLUGIN_ID_KUBERNETES)) {
@@ -122,7 +124,7 @@ private List getContainerList(config) {
     ))
     config.containerMap.each { imageName, containerName ->
         def templateParameters = [
-            echo "container name in containerlist is ${containerName}"
+            echo " container name in containerlist is ${containerName} "
             name: containerName.toLowerCase(),
             image: imageName,
             alwaysPullImage: true,
