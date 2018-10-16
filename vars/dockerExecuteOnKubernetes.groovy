@@ -42,6 +42,7 @@ void call(Map parameters = [:], body) {
             configHelper.withMandatoryProperty('dockerImage')
             config.containerName = 'container-exec'
             config.containerMap = ["${config.get('dockerImage')}": config.containerName]
+            echo "containerMap is ${containerMap}"
         }
         executeOnPod(config, body)
     }
@@ -67,6 +68,7 @@ void executeOnPod(Map config, Closure body) {
     try {
         if (config.containerName)
             stashWorkspace(config, 'workspace')
+        echo " config is ${config}"
         podTemplate(getOptions(config)) {
             node(config.uniqueId) {
                 if (config.containerName) {
@@ -120,6 +122,7 @@ private List getContainerList(config) {
     ))
     config.containerMap.each { imageName, containerName ->
         def templateParameters = [
+            echo "container name in containerlist is ${containerName}"
             name: containerName.toLowerCase(),
             image: imageName,
             alwaysPullImage: true,
