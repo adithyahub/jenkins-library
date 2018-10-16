@@ -124,7 +124,7 @@ private List getContainerList(config) {
     ))
     config.containerMap.each { imageName, containerName ->
         def templateParameters = [
-            echo " container name in containerlist is ${containerName} "
+            // echo " container name in containerlist is ${containerName} "
             name: containerName.toLowerCase(),
             image: imageName,
             alwaysPullImage: true,
